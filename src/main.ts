@@ -183,8 +183,8 @@ function cellPhase(array:Array<Array<states>>, height: number, width: number): A
     newinfected = newinfected.concat(infectionPhase(array, height, width));
     
     for (let i in newinfected) {
-        const y = newinfected[i[0]];
-        const x = newinfected[i[1]];
+        const y = newinfected[i][0];
+        const x = newinfected[i][1];
         
         try {
             newWorld[y][x] = states.Infected;
@@ -198,12 +198,15 @@ function cellPhase(array:Array<Array<states>>, height: number, width: number): A
 }
 
 function createWorld(worldHeight: number, worldWidth: number): Array<Array<states>> {
-    let theWorld: Array<Array<states>> = new Array(worldHeight);
-    for(let row in theWorld) {
-        theWorld[row] = new Array(worldWidth);
-        for(let cell in theWorld[row]) {
-            theWorld[row][cell] = states.Susceptible;
+    let theWorld: Array<Array<states>> = new Array();
+    
+    for(let i = 0; i < worldHeight; i++) {
+        let row: Array<states> = new Array();
+        for(let j = 0; j < worldWidth; j++) {
+            let cell = states.Susceptible;
+            row.push(cell);
         }
+        theWorld.push(row);
     }
     
     return theWorld;
@@ -224,41 +227,41 @@ function seed(array:Array<Array<states>>): Array<Array<states>> {
          2,71,138,... = 2
     */
     const source: Array<[number, number]> = new Array();
-    source.push([41,22]);
-    source.push([58,24]);
-    source.push([42,25]);
-    source.push([43,25]);
-    source.push([40,26]);
-    source.push([63,27]);
-    source.push([67,27]);
-    source.push([33,28]);
-    source.push([60,29]);
-    source.push([41,30]);
-    source.push([52,30]);
-    source.push([29,31]);
-    source.push([54,31]);
-    source.push([44,32]);
-    source.push([52,32]);
-    source.push([53,33]);
-    source.push([37,35]);
-    source.push([34,36]);
-    source.push([35,37]);
-    source.push([27,38]);
-    source.push([30,40]);
-    source.push([29,41]);
-    source.push([30,41]);
-    source.push([32,42]);
-    source.push([33,42]);
-    source.push([35,42]);
+    source.push([22,41]);
+    source.push([24,58]);
+    source.push([25,42]);
     source.push([25,43]);
-    source.push([27,43]);
-    source.push([31,43]);
-    source.push([26,44]);
-    source.push([23,45]);
+    source.push([26,40]);
+    source.push([27,63]);
+    source.push([27,67]);
+    source.push([28,33]);
+    source.push([29,60]);
+    source.push([30,41]);
+    source.push([30,52]);
+    source.push([31,29]);
+    source.push([31,54]);
+    source.push([32,44]);
+    source.push([32,52]);
+    source.push([33,53]);
+    source.push([35,37]);
+    source.push([36,34]);
+    source.push([37,35]);
+    source.push([38,27]);
+    source.push([40,30]);
+    source.push([41,29]);
+    source.push([41,30]);
+    source.push([42,32]);
+    source.push([42,33]);
+    source.push([42,35]);
+    source.push([43,25]);
+    source.push([43,27]);
+    source.push([43,31]);
+    source.push([44,26]);
+    source.push([45,23]);
     
     for (let i in source) {
-        const y = source[i[0]];
-        const x = source[i[1]];
+        const y = source[i][0];
+        const x = source[i][1];
         
         try {
             array[y][x] = states.Infected;
@@ -306,3 +309,5 @@ function runModel(runs: number) {
         console.log("file written");
     });
 }
+
+runModel(0);
