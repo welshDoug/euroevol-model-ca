@@ -1,0 +1,32 @@
+{
+  "name": "euroevol-model-ca",
+  "version": "1.0.0",
+  "description": "A Cellular automata model for the spread of Neolithic culture.",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc",
+    "start": "node dist/main.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/welshDoug/euroevol-model-ca.git"
+  },
+  "author": "Doug Cowie",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/welshDoug/euroevol-model-ca/issues"
+  },
+  "homepage": "https://github.com/welshDoug/euroevol-model-ca#readme",
+  "dependencies": {
+    "fs": "0.0.1-security",
+    "json2csv": "^4.0.2",
+    "minimist": "^1.2.0",
+    "moore": "^1.0.0"
+  },
+  "devDependencies": {
+    "@types/core-js": "^0.9.46",
+    "@types/node": "^9.6.1",
+    "typescript": "^2.8.1"
+  }
+}
