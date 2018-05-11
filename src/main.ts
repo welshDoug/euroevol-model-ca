@@ -8,6 +8,8 @@ enum neighbours {North = 0, NorthEast, East, SouthEast, South, SouthWest, West, 
 interface GridCell {
     id: number;
     value: states;
+    y: number;
+    x: number;
 }
 
 /**
@@ -208,7 +210,64 @@ function createWorld(worldHeight: number, worldWidth: number): Array<Array<state
 }
 
 function seed(array:Array<Array<states>>): Array<Array<states>> {
-    //TODO work out seed cells
+    /* Starting Cells IDs (31 values pre -5500):
+    1559, 1714, 1767, 1768, 1834, 1926, 1930, 1965, 2061, 2111, 2122, 2168, 2193, 2252, 2260, 2330, 2452, 2518, 2588, 2649, 2790, 2858, 2859, 2930, 2931, 2933, 2992, 2994, 2998, 3062, 3128*/
+    
+    /*ys  
+         0-68 = 0
+         69-136= 1
+        136-204= 2
+        
+      xs (x % 68) - 1
+         0,69,136,.. = 0
+         1,70,137,.. = 1
+         2,71,138,... = 2
+    */
+    const source: Array<[number, number]> = new Array();
+    source.push([41,22]);
+    source.push([58,24]);
+    source.push([42,25]);
+    source.push([43,25]);
+    source.push([40,26]);
+    source.push([63,27]);
+    source.push([67,27]);
+    source.push([33,28]);
+    source.push([60,29]);
+    source.push([41,30]);
+    source.push([52,30]);
+    source.push([29,31]);
+    source.push([54,31]);
+    source.push([44,32]);
+    source.push([52,32]);
+    source.push([53,33]);
+    source.push([37,35]);
+    source.push([34,36]);
+    source.push([35,37]);
+    source.push([27,38]);
+    source.push([30,40]);
+    source.push([29,41]);
+    source.push([30,41]);
+    source.push([32,42]);
+    source.push([33,42]);
+    source.push([35,42]);
+    source.push([25,43]);
+    source.push([27,43]);
+    source.push([31,43]);
+    source.push([26,44]);
+    source.push([23,45]);
+    
+    for (let i in source) {
+        const y = source[i[0]];
+        const x = source[i[1]];
+        
+        try {
+            array[y][x] = states.Infected;
+        }
+        catch (error) {
+            console.log(`Unable to seed cell ${y}, ${x}`);
+        }
+    }
+    
     return array;
 }
 
@@ -217,7 +276,7 @@ function convertToGrid(world: Array<Array<states>>, worldHeight: number, worldWi
     
     for (let i = 0, id = 0; i < worldHeight; i++) {
         for (let j = 0; j < worldWidth; j++, id++) {
-            grid.push({id: id, value: world[i][j]});
+            grid.push({id: id, value: world[i][j], y: i, x: j});
         }
     }
     
@@ -229,7 +288,7 @@ function runModel(runs: number) {
     //transform theWorld array into csv
     //write csv file to disk
     const worldHeight = 46;
-    const worldWidth = 68;
+    const worldWidth = 69;
     
     let theWorld: Array<Array<states>> = createWorld(worldHeight, worldWidth);
     theWorld = seed(theWorld);
