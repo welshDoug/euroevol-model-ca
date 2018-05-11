@@ -1,6 +1,7 @@
-import {moore} from 'moore';
+import * as moore from 'moore';
 import * as fs from 'fs';
 import {Parser} from 'json2csv';
+import * as util from 'util';
 
 enum states {Susceptible, Infected};
 enum neighbours {North = 0, NorthEast, East, SouthEast, South, SouthWest, West, NorthWest};
@@ -120,7 +121,7 @@ function calculateNoInfectedNeighbours(array:Array<Array<states>>, y:number, x:n
                 return sum+1;
             }
         } catch (error) {
-            console.log(`Unable to get cell ${elem[0]}, ${elem[1]}`);
+            //console.log(`Unable to get cell ${elem[0]}, ${elem[1]}`);
         }
         return sum;
     }, 0);
@@ -310,4 +311,4 @@ function runModel(runs: number) {
     });
 }
 
-runModel(0);
+runModel(10);
