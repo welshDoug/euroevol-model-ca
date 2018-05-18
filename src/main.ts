@@ -28,7 +28,7 @@ function doMove(array:Array<Array<states>>, y:number, x: number): Array<[number,
     if (cell == states.Infected) {
         for (let i = 0; i < 8 /*number of neghbours*/; i++) {
             const rand = Math.random();
-            if (rand < 0.03) {// 0.25 * 0.125
+            if (rand < 0.25) {// 0.25 * 0.125
                 try {
                     const infectedNeighbour: [number, number] = neighbourCoords(i, y, x);
                     if (array[y][x] != states.Infected) {
@@ -139,7 +139,7 @@ function infectionIndex(array:Array<Array<states>>, y:number, x:number, n:number
         const infecteds = calculateNoInfectedNeighbours(array, y, x, i);
         const newInfecteds = infecteds-nminus1Infecteds;
         nminus1Infecteds = infecteds;
-        infectionIndex += newInfecteds / i;
+        infectionIndex += (newInfecteds / i);
     }
     
     return infectionIndex;
@@ -147,13 +147,13 @@ function infectionIndex(array:Array<Array<states>>, y:number, x:number, n:number
 
 function doInfection(array:Array<Array<states>>, y:number, x: number): boolean {
     //Calculate infection index from cells up to 10th degree of neighbour
-    //Compute random infetion threshold, between 0 and 25
+    //Compute random infetion threshold, between 0 and 100
     //If index > threshold, cell is infected
     //return boolean
-    const index = infectionIndex(array, y, x, 10);
-    const threshold = Math.floor((Math.random() * 25));
+    const index = infectionIndex(array, y, x, 5);
+    const threshold = Math.floor((Math.random() * 100));
     
-    return (index >= threshold) ? true : false;
+    return (index > threshold) ? true : false;
 }
 
 function infectionPhase(array:Array<Array<states>>, height: number, width: number): Array<[number, number]> {
